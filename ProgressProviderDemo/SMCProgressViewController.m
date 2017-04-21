@@ -10,6 +10,7 @@
 
 #import "SMCProgressLayer.h"
 #import "SMCProgressProvider.h"
+#import "UIProgressView+SMCAdditions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     [super viewDidLoad];
 
-    self.progressLayer = [SMCProgressLayer layerWithProgressView:self.progressView];
+    self.progressLayer = [SMCProgressLayer layerWithProgressDisplay:self.progressView];
 
     [self.view.layer addSublayer:self.progressLayer];
 }

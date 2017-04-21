@@ -117,12 +117,26 @@ typedef NS_ENUM(NSUInteger, SMCProgressNotificationMethod)
 
 - (BOOL)addProgressObserver:(id<SMCProgressObserver>)observer
 {
-    return [self _addObject:observer toArray:self.observers];
+    BOOL observerAdded = [self _addObject:observer toArray:self.observers];
+
+    if (observerAdded && [observer respondsToSelector:@selector(progressProvider:didAddObserver:)])
+    {
+        [observer progressProvider:self didAddObserver:observer];
+    }
+
+    return observerAdded;
 }
 
 - (BOOL)removeProgressObserver:(id<SMCProgressObserver>)observer
 {
-    return [self _removeObject:observer fromArray:self.observers];
+    BOOL observerRemoved = [self _removeObject:observer fromArray:self.observers];
+
+    if (observerRemoved && [observer respondsToSelector:@selector(progressProvider:didRemoveObserver:)])
+    {
+        [observer progressProvider:self didRemoveObserver:observer];
+    }
+
+    return observerRemoved;
 }
 
 - (BOOL)hasProgressObserver:(id<SMCProgressObserver>)observer

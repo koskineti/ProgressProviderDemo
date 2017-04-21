@@ -22,33 +22,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Bfj-of-Ka5">
-                                <rect key="frame" x="16" y="436.5" width="343" height="222.5"/>
+                                <rect key="frame" x="16" y="28" width="343" height="631"/>
                                 <subviews>
+                                    <containerView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="npR-IM-G3P">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="392.5"/>
+                                        <connections>
+                                            <segue destination="tmF-sy-h0L" kind="embed" identifier="CircularProgressEmbedSegue" id="XJL-oq-KiV"/>
+                                        </connections>
+                                    </containerView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0H-rg-XLG">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
+                                        <rect key="frame" x="0.0" y="408.5" width="343" height="57.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="48"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P3T-k3-MRM">
-                                        <rect key="frame" x="0.0" y="73.5" width="343" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="482" width="343" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Progress Source 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5t-Zd-ytO">
                                                 <rect key="frame" x="0.0" y="0.0" width="319" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DNV-H6-HKw">
                                                 <rect key="frame" x="319" y="0.0" width="24" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="UaX-SE-Zru">
-                                        <rect key="frame" x="0.0" y="110" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="518.5" width="343" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3NP-vu-Blj">
                                                 <rect key="frame" x="0.0" y="0.0" width="171.5" height="30"/>
@@ -67,24 +73,24 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WZK-Fd-VwO">
-                                        <rect key="frame" x="0.0" y="156" width="343" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="564.5" width="343" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Progress Source 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mej-IT-AMs">
                                                 <rect key="frame" x="0.0" y="0.0" width="319" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L4J-ug-WIY">
                                                 <rect key="frame" x="319" y="0.0" width="24" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Sa7-nx-CZZ">
-                                        <rect key="frame" x="0.0" y="192.5" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="601" width="343" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVa-J2-9L9">
                                                 <rect key="frame" x="0.0" y="0.0" width="171.5" height="30"/>
@@ -104,20 +110,11 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IEc-9M-LeO">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="Wq9-bd-qhw"/>
-                                </constraints>
-                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Bfj-of-Ka5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="28" id="0e5-rO-9Mv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bfj-of-Ka5" secondAttribute="trailing" id="3Dd-4g-p96"/>
-                            <constraint firstItem="IEc-9M-LeO" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4BW-Gy-8P6"/>
-                            <constraint firstAttribute="trailing" secondItem="IEc-9M-LeO" secondAttribute="trailing" id="YI9-4v-Xv5"/>
-                            <constraint firstItem="IEc-9M-LeO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="u0h-b0-aIa"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bfj-of-Ka5" secondAttribute="bottom" constant="8" id="wGk-6k-fb2"/>
                             <constraint firstItem="Bfj-of-Ka5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="xJ1-88-YfK"/>
                         </constraints>
@@ -134,7 +131,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="47"/>
+            <point key="canvasLocation" x="29.600000000000001" y="46.326836581709152"/>
+        </scene>
+        <!--Circular Progress View Controller-->
+        <scene sceneID="gBu-UB-Chx">
+            <objects>
+                <viewController id="tmF-sy-h0L" customClass="SMCCircularProgressViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hJT-0C-bpZ">
+                        <rect key="frame" x="0.0" y="0.0" width="343" height="392.5"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDc-rL-bJu" customClass="SMCCircularProgressView">
+                                <rect key="frame" x="0.0" y="0.0" width="343" height="392.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SDc-rL-bJu" firstAttribute="leading" secondItem="hJT-0C-bpZ" secondAttribute="leading" id="Ewp-f4-jJc"/>
+                            <constraint firstItem="SDc-rL-bJu" firstAttribute="top" secondItem="hJT-0C-bpZ" secondAttribute="top" id="OEl-Qg-AMu"/>
+                            <constraint firstAttribute="bottom" secondItem="SDc-rL-bJu" secondAttribute="bottom" id="cK3-q9-zCd"/>
+                            <constraint firstAttribute="trailing" secondItem="SDc-rL-bJu" secondAttribute="trailing" id="xyi-LF-PsX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="progressView" destination="SDc-rL-bJu" id="uHX-tx-UC0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rkd-GL-csi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="766" y="46"/>
         </scene>
     </scenes>
 </document>

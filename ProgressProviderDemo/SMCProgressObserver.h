@@ -19,6 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)progressProviderDidFinish:(SMCProgressProvider *)provider;
 - (void)progressProviderDidCancel:(SMCProgressProvider *)provider;
 
+@optional
+
+- (void)progressProvider:(SMCProgressProvider *)provider didAddObserver:(id<SMCProgressObserver>)observer;
+- (void)progressProvider:(SMCProgressProvider *)provider didRemoveObserver:(id<SMCProgressObserver>)observer;
+
 @end
 
 NS_ASSUME_NONNULL_END

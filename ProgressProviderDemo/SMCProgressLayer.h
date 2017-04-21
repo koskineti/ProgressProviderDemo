@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@class UIProgressView;
+@protocol SMCProgressDisplay;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,9 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) float progress;
 
-+ (instancetype)layerWithProgressView:(UIProgressView *)progressView;
++ (instancetype)layerWithProgressDisplay:(id<SMCProgressDisplay>)progressDisplay;
 
-- (instancetype)initWithProgressView:(UIProgressView *)progressView;
+- (instancetype)initWithProgressDisplay:(id<SMCProgressDisplay>)progressDisplay;
 
 - (void)setProgress:(float)progress animated:(BOOL)animated;
 - (void)finishWithProgress:(float)progress;

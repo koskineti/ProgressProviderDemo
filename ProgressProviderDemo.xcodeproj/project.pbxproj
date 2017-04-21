@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D2BC8931EA77479009BD19D /* SMCCircularProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2BC8911EA77479009BD19D /* SMCCircularProgressViewController.m */; };
+		8D2BC8941EA77479009BD19D /* SMCCircularProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2BC8921EA77479009BD19D /* SMCCircularProgressViewController.xib */; };
+		8D2BC8971EA7749B009BD19D /* SMCCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2BC8961EA7749B009BD19D /* SMCCircularProgressView.m */; };
+		8D2BC89D1EA8B4E9009BD19D /* MKCUIColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2BC89C1EA8B4E9009BD19D /* MKCUIColorAdditions.m */; };
 		8D8500CF1E83C6B7007B3B4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8500CE1E83C6B7007B3B4E /* main.m */; };
 		8D8500D21E83C6B7007B3B4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8500D11E83C6B7007B3B4E /* AppDelegate.m */; };
 		8D8500D51E83C6B7007B3B4E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8500D41E83C6B7007B3B4E /* ViewController.m */; };
@@ -23,6 +27,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D2BC8901EA77479009BD19D /* SMCCircularProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCCircularProgressViewController.h; sourceTree = "<group>"; };
+		8D2BC8911EA77479009BD19D /* SMCCircularProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCCircularProgressViewController.m; sourceTree = "<group>"; };
+		8D2BC8921EA77479009BD19D /* SMCCircularProgressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMCCircularProgressViewController.xib; sourceTree = "<group>"; };
+		8D2BC8951EA7749B009BD19D /* SMCCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCCircularProgressView.h; sourceTree = "<group>"; };
+		8D2BC8961EA7749B009BD19D /* SMCCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCCircularProgressView.m; sourceTree = "<group>"; };
+		8D2BC89B1EA8B4E9009BD19D /* MKCUIColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKCUIColorAdditions.h; sourceTree = "<group>"; };
+		8D2BC89C1EA8B4E9009BD19D /* MKCUIColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKCUIColorAdditions.m; sourceTree = "<group>"; };
+		8D2BC89E1EA8BDD3009BD19D /* SMCProgressDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCProgressDisplay.h; sourceTree = "<group>"; };
+		8D2BC89F1EA8BEF0009BD19D /* UIProgressView+SMCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIProgressView+SMCAdditions.h"; sourceTree = "<group>"; };
 		8D308B831E8A247300A9F5DB /* SMCProgressSourceObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCProgressSourceObserver.h; sourceTree = "<group>"; };
 		8D8500CA1E83C6B7007B3B4E /* ProgressProviderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProgressProviderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8500CE1E83C6B7007B3B4E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -122,8 +135,16 @@
 		8DDA1BD01E8D19860095A1B9 /* Progress Provider */ = {
 			isa = PBXGroup;
 			children = (
+				8D2BC89B1EA8B4E9009BD19D /* MKCUIColorAdditions.h */,
+				8D2BC89C1EA8B4E9009BD19D /* MKCUIColorAdditions.m */,
+				8D2BC8951EA7749B009BD19D /* SMCCircularProgressView.h */,
+				8D2BC8961EA7749B009BD19D /* SMCCircularProgressView.m */,
+				8D2BC8901EA77479009BD19D /* SMCCircularProgressViewController.h */,
+				8D2BC8911EA77479009BD19D /* SMCCircularProgressViewController.m */,
+				8D2BC8921EA77479009BD19D /* SMCCircularProgressViewController.xib */,
 				8D8500F41E8506A5007B3B4E /* SMCMockProgressSource.h */,
 				8D8500F51E8506A5007B3B4E /* SMCMockProgressSource.m */,
+				8D2BC89E1EA8BDD3009BD19D /* SMCProgressDisplay.h */,
 				8DDA1BCC1E8D16CF0095A1B9 /* SMCProgressLayer.h */,
 				8DDA1BCD1E8D16CF0095A1B9 /* SMCProgressLayer.m */,
 				8D8500F01E83E8EE007B3B4E /* SMCProgressObserver.h */,
@@ -138,6 +159,7 @@
 				8DDA1BD51E8E1F220095A1B9 /* SMCProgressViewPresenter.m */,
 				8D8500F11E83EEFC007B3B4E /* SMCZeroingWeakReferenceArray.h */,
 				8D8500F21E83EEFC007B3B4E /* SMCZeroingWeakReferenceArray.m */,
+				8D2BC89F1EA8BEF0009BD19D /* UIProgressView+SMCAdditions.h */,
 			);
 			name = "Progress Provider";
 			sourceTree = "<group>";
@@ -203,6 +225,7 @@
 			files = (
 				8D8500EB1E83CDEB007B3B4E /* SMCProgressViewController.xib in Resources */,
 				8D8500DD1E83C6B7007B3B4E /* LaunchScreen.storyboard in Resources */,
+				8D2BC8941EA77479009BD19D /* SMCCircularProgressViewController.xib in Resources */,
 				8D8500DA1E83C6B7007B3B4E /* Assets.xcassets in Resources */,
 				8D8500D81E83C6B7007B3B4E /* Main.storyboard in Resources */,
 			);
@@ -219,10 +242,13 @@
 				8D8500D51E83C6B7007B3B4E /* ViewController.m in Sources */,
 				8DDA1BCE1E8D16CF0095A1B9 /* SMCProgressLayer.m in Sources */,
 				8D8500D21E83C6B7007B3B4E /* AppDelegate.m in Sources */,
+				8D2BC8931EA77479009BD19D /* SMCCircularProgressViewController.m in Sources */,
 				8D8500CF1E83C6B7007B3B4E /* main.m in Sources */,
 				8D8500F31E83EEFC007B3B4E /* SMCZeroingWeakReferenceArray.m in Sources */,
+				8D2BC89D1EA8B4E9009BD19D /* MKCUIColorAdditions.m in Sources */,
 				8D8500F61E8506A5007B3B4E /* SMCMockProgressSource.m in Sources */,
 				8DDA1BD61E8E1F220095A1B9 /* SMCProgressViewPresenter.m in Sources */,
+				8D2BC8971EA7749B009BD19D /* SMCCircularProgressView.m in Sources */,
 				8D8500EE1E83E325007B3B4E /* SMCProgressProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

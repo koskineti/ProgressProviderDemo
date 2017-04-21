@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 
+#import "SMCCircularProgressViewController.h"
 #import "SMCMockProgressSource.h"
 #import "SMCProgressObserver.h"
 #import "SMCProgressProvider.h"
@@ -37,26 +38,39 @@
 
 @implementation ViewController
 
+#pragma mark - Initialization
+
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+
+    if (self != nil)
+    {
+        [self _init];
+    }
+
+    return self;
+}
+
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+
+    if (self != nil)
+    {
+        [self _init];
+    }
+
+    return self;
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    NSArray<NSNumber *> *timeIntervals1 = @[ @(0.0f), @(5.0f), @(2.5f) ];
-    NSArray<NSNumber *> *progressValues1 = @[ @(0.0f), @(0.5f), @(1.0f) ];
-
-    NSArray<NSNumber *> *timeIntervals2 = @[ @(0.0f), @(15.0f), @(12.5f) ];
-    NSArray<NSNumber *> *progressValues2 = @[ @(0.0f), @(0.5f), @(1.0f) ];
-
-    self.progressProvider = [SMCProgressProvider new];
-    self.progressSource1 = [SMCMockProgressSource sourceWithTimeIntervals:timeIntervals1 progressValues:progressValues1];
-    self.progressSource2 = [SMCMockProgressSource sourceWithTimeIntervals:timeIntervals2 progressValues:progressValues2];
     self.progressViewPresenter = [[SMCProgressViewPresenter alloc] initWithProgressProvider:self.progressProvider];
-
-    [self.progressProvider addProgressSource:self.progressSource1];
-    [self.progressProvider addProgressSource:self.progressSource2];
-    [self.progressProvider addProgressObserver:self];
     [self.progressViewPresenter addProgressViewControllerToParentViewController:self];
 
     self.numberFormatter = [NSNumberFormatter new];
@@ -68,6 +82,16 @@
     self.progressProviderLabel.text = [self.numberFormatter stringFromNumber:@(0.0f)];
     self.progressSource1Label.text = [self.numberFormatter stringFromNumber:@(0.0f)];
     self.progressSource2Label.text = [self.numberFormatter stringFromNumber:@(0.0f)];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"CircularProgressEmbedSegue"])
+    {
+        SMCCircularProgressViewController *destinationViewController = (SMCCircularProgressViewController *)segue.destinationViewController;
+
+        [self.progressProvider addProgressObserver:destinationViewController];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -151,6 +175,27 @@
 }
 
 #pragma mark - Private
+
+- (void)_init
+{
+    NSArray<NSNumber *> *timeIntervals1 = @[ @(0.0f), @(5.0f), @(2.5f) ];
+    NSArray<NSNumber *> *progressValues1 = @[ @(0.0f), @(0.5f), @(1.0f) ];
+
+    NSArray<NSNumber *> *timeIntervals2 = @[ @(0.0f), @(15.0f), @(12.5f) ];
+    NSArray<NSNumber *> *progressValues2 = @[ @(0.0f), @(0.5f), @(1.0f) ];
+
+    SMCProgressProvider *progressProvider = [SMCProgressProvider new];
+    id<SMCProgressSource> progressSource1 = [SMCMockProgressSource sourceWithTimeIntervals:timeIntervals1 progressValues:progressValues1];
+    id<SMCProgressSource> progressSource2 = [SMCMockProgressSource sourceWithTimeIntervals:timeIntervals2 progressValues:progressValues2];
+
+    [progressProvider addProgressSource:progressSource1];
+    [progressProvider addProgressSource:progressSource2];
+    [progressProvider addProgressObserver:self];
+
+    _progressProvider = progressProvider;
+    _progressSource1 = progressSource1;
+    _progressSource2 = progressSource2;
+}
 
 - (void)_progressSourceDidFinishOrCancel:(id<SMCProgressSource>)source
 {

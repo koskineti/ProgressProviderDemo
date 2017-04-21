@@ -8,7 +8,7 @@
 
 #import "SMCProgressLayer.h"
 
-#import <UIKit/UIKit.h>
+#import "SMCProgressDisplay.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +16,7 @@ static NSString * const kProgressPropertyKeyPath = @"progress";
 
 @interface SMCProgressLayer ()
 
-@property (weak, nonatomic) UIProgressView *progressView;
+@property (weak, nonatomic) id<SMCProgressDisplay> progressDisplay;
 
 @end
 
@@ -45,18 +45,18 @@ static NSString * const kProgressPropertyKeyPath = @"progress";
 
 #pragma mark - Initialization
 
-+ (instancetype)layerWithProgressView:(UIProgressView *)progressView
++ (instancetype)layerWithProgressDisplay:(id<SMCProgressDisplay>)progressDisplay
 {
-    return [[[self class] alloc] initWithProgressView:progressView];
+    return [[[self class] alloc] initWithProgressDisplay:progressDisplay];
 }
 
-- (instancetype)initWithProgressView:(UIProgressView *)progressView
+- (instancetype)initWithProgressDisplay:(id<SMCProgressDisplay>)progressDisplay
 {
     self = [super init];
 
     if (self != nil)
     {
-        _progressView = progressView;
+        _progressDisplay = progressDisplay;
     }
 
     return self;
@@ -129,7 +129,7 @@ static NSString * const kProgressPropertyKeyPath = @"progress";
 
 - (void)display
 {
-    self.progressView.progress = self.presentationLayer.progress;
+    self.progressDisplay.progress = self.presentationLayer.progress;
 }
 
 #pragma mark - Private
