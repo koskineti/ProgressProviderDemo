@@ -118,6 +118,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
     if (!self.presented)
     {
+        self.presented = YES;
+
         if (animated)
         {
             [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -128,8 +130,6 @@ NS_ASSUME_NONNULL_BEGIN
         {
             self.view.alpha = 1.0f;
         }
-
-        self.presented = YES;
     }
 }
 
@@ -137,6 +137,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
     if (self.presented)
     {
+        self.presented = NO;
+
         if (animated)
         {
             [UIView animateWithDuration:0.25f delay:1.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -148,8 +150,6 @@ NS_ASSUME_NONNULL_BEGIN
         {
             self.view.alpha = 0.0f;
         }
-        
-        self.presented = NO;
     }
 }
 

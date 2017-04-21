@@ -10,7 +10,6 @@
 		8D2BC8931EA77479009BD19D /* SMCCircularProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2BC8911EA77479009BD19D /* SMCCircularProgressViewController.m */; };
 		8D2BC8941EA77479009BD19D /* SMCCircularProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D2BC8921EA77479009BD19D /* SMCCircularProgressViewController.xib */; };
 		8D2BC8971EA7749B009BD19D /* SMCCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2BC8961EA7749B009BD19D /* SMCCircularProgressView.m */; };
-		8D2BC89D1EA8B4E9009BD19D /* MKCUIColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2BC89C1EA8B4E9009BD19D /* MKCUIColorAdditions.m */; };
 		8D8500CF1E83C6B7007B3B4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8500CE1E83C6B7007B3B4E /* main.m */; };
 		8D8500D21E83C6B7007B3B4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8500D11E83C6B7007B3B4E /* AppDelegate.m */; };
 		8D8500D51E83C6B7007B3B4E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8500D41E83C6B7007B3B4E /* ViewController.m */; };
@@ -32,8 +31,6 @@
 		8D2BC8921EA77479009BD19D /* SMCCircularProgressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMCCircularProgressViewController.xib; sourceTree = "<group>"; };
 		8D2BC8951EA7749B009BD19D /* SMCCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCCircularProgressView.h; sourceTree = "<group>"; };
 		8D2BC8961EA7749B009BD19D /* SMCCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCCircularProgressView.m; sourceTree = "<group>"; };
-		8D2BC89B1EA8B4E9009BD19D /* MKCUIColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKCUIColorAdditions.h; sourceTree = "<group>"; };
-		8D2BC89C1EA8B4E9009BD19D /* MKCUIColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKCUIColorAdditions.m; sourceTree = "<group>"; };
 		8D2BC89E1EA8BDD3009BD19D /* SMCProgressDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCProgressDisplay.h; sourceTree = "<group>"; };
 		8D2BC89F1EA8BEF0009BD19D /* UIProgressView+SMCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIProgressView+SMCAdditions.h"; sourceTree = "<group>"; };
 		8D308B831E8A247300A9F5DB /* SMCProgressSourceObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCProgressSourceObserver.h; sourceTree = "<group>"; };
@@ -135,8 +132,6 @@
 		8DDA1BD01E8D19860095A1B9 /* Progress Provider */ = {
 			isa = PBXGroup;
 			children = (
-				8D2BC89B1EA8B4E9009BD19D /* MKCUIColorAdditions.h */,
-				8D2BC89C1EA8B4E9009BD19D /* MKCUIColorAdditions.m */,
 				8D2BC8951EA7749B009BD19D /* SMCCircularProgressView.h */,
 				8D2BC8961EA7749B009BD19D /* SMCCircularProgressView.m */,
 				8D2BC8901EA77479009BD19D /* SMCCircularProgressViewController.h */,
@@ -245,7 +240,6 @@
 				8D2BC8931EA77479009BD19D /* SMCCircularProgressViewController.m in Sources */,
 				8D8500CF1E83C6B7007B3B4E /* main.m in Sources */,
 				8D8500F31E83EEFC007B3B4E /* SMCZeroingWeakReferenceArray.m in Sources */,
-				8D2BC89D1EA8B4E9009BD19D /* MKCUIColorAdditions.m in Sources */,
 				8D8500F61E8506A5007B3B4E /* SMCMockProgressSource.m in Sources */,
 				8DDA1BD61E8E1F220095A1B9 /* SMCProgressViewPresenter.m in Sources */,
 				8D2BC8971EA7749B009BD19D /* SMCCircularProgressView.m in Sources */,

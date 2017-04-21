@@ -12,7 +12,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+IB_DESIGNABLE
 @interface SMCCircularProgressView : UIView <SMCProgressDisplay>
+
+@property (nonatomic, copy) IBInspectable UIColor *trackColor;
+@property (nonatomic) IBInspectable CGFloat lineWidth;
+@property (nonatomic) IBInspectable CGFloat angleOffset;
 
 @end
 
