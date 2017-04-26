@@ -10,6 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// `CGFloat` is defined as `float` on 32-bit systems and as `double` on 64-bit systems.
+// For this reason, when comparing `CGFloat` values we have to use the `MIN`, `MAX`, and `ABS`
+// macros instead of choosing one of the C standard library functions, e.g. `fminf` for
+// floats or `fmin` for doubles. For the same reason, we define a `CGFloat` specific
+// epsilon value here to determine if a CoreGraphics floating point value has changed
+// with the expression `(ABS(cgFloat1 - cgFloat2) > CGFLOAT_EPSILON)`.
+#ifdef CGFLOAT_IS_DOUBLE
+static const CGFloat CGFLOAT_EPSILON = DBL_EPSILON;
+#else
+static const CGFloat CGFLOAT_EPSILON = FLT_EPSILON;
+#endif
+
 @interface SMCCircularProgressView ()
 
 @property (nonatomic) CAShapeLayer *trackShapeLayer;
@@ -39,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setLineWidth:(CGFloat)lineWidth
 {
-    if (![self _isCGFloatValue:_lineWidth equalTo:lineWidth])
+    if (ABS(_lineWidth - lineWidth) > CGFLOAT_EPSILON)
     {
         _lineWidth = lineWidth;
 
@@ -52,9 +64,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setAngleOffset:(CGFloat)angleOffset
 {
-    angleOffset = [self _clampCGFloatValue:angleOffset minimum:0.0 maximum:(2 * M_PI)];
+    // Clamp the incoming angle offset to the range [0..2pi] radians, i.e., to a full circle.
+    angleOffset = (CGFloat)MAX(0.0, MIN(angleOffset, (2 * M_PI)));
 
-    if (![self _isCGFloatValue:_angleOffset equalTo:angleOffset])
+    if (ABS(_angleOffset - angleOffset) > CGFLOAT_EPSILON)
     {
         _angleOffset = angleOffset;
 
@@ -64,9 +77,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setProgress:(float)progress
 {
-    progress = [self _clampFloatValue:progress minimum:0.0f maximum:1.0f];
+    // Clamp the incoming progress value to the range [0..1].
+    progress = fmaxf(0.0f, fminf(progress, 1.0f));
 
-    if (![self _isFloatValue:_progress equalTo:progress])
+    if ((fabsf(_progress - progress) > FLT_EPSILON))
     {
         _progress = progress;
 
@@ -152,14 +166,13 @@ NS_ASSUME_NONNULL_BEGIN
     CAShapeLayer *progressShapeLayer = [CAShapeLayer new];
     progressShapeLayer.lineCap = kCALineCapRound;
     progressShapeLayer.fillColor = UIColor.clearColor.CGColor;
-    progressShapeLayer.strokeEnd = 0.0f;
 
     [self.layer addSublayer:trackShapeLayer];
     [self.layer addSublayer:progressShapeLayer];
 
     _trackColor = UIColor.clearColor;
-    _lineWidth = 3.0f;
-    _angleOffset = 0.0f;
+    _lineWidth = 3.0;
+    _angleOffset = 0.0;
 
     _progressShapeLayer = progressShapeLayer;
     _trackShapeLayer = trackShapeLayer;
@@ -170,6 +183,7 @@ NS_ASSUME_NONNULL_BEGIN
     self.trackShapeLayer.frame = layerFrame;
     self.trackShapeLayer.lineWidth = self.lineWidth;
     self.trackShapeLayer.strokeColor = self.trackColor.CGColor;
+    self.trackShapeLayer.strokeStart = self.progress;
     self.trackShapeLayer.path = [self _circularPathWithLayerFrame:layerFrame];
 }
 
@@ -178,14 +192,15 @@ NS_ASSUME_NONNULL_BEGIN
     self.progressShapeLayer.frame = layerFrame;
     self.progressShapeLayer.lineWidth = self.lineWidth;
     self.progressShapeLayer.strokeColor = self.tintColor.CGColor;
+    self.progressShapeLayer.strokeEnd = self.progress;
     self.progressShapeLayer.path = [self _circularPathWithLayerFrame:layerFrame];
 }
 
 - (CGRect)_layerFrame
 {
     CGFloat side = MIN(self.bounds.size.width, self.bounds.size.height);
-    CGFloat x = (CGRectGetWidth(self.bounds) - side) / 2.0f;
-    CGFloat y = (CGRectGetHeight(self.bounds) - side) / 2.0f;
+    CGFloat x = (CGRectGetWidth(self.bounds) - side) / 2;
+    CGFloat y = (CGRectGetHeight(self.bounds) - side) / 2;
 
     return CGRectIntegral(CGRectMake(x, y, side, side));
 }
@@ -193,12 +208,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGPathRef)_circularPathWithLayerFrame:(CGRect)frame
 {
     CGFloat diameter = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame));
-    CGFloat centerXY = diameter / 2.0f;
+    CGFloat centerXY = diameter / 2;
     CGPoint center = CGPointMake(centerXY, centerXY);
-    CGFloat radius = (diameter - self.lineWidth) / 2.0f;
+    CGFloat radius = (diameter - self.lineWidth) / 2;
 
-    CGFloat startAngle = -M_PI_2 + self.angleOffset;
-    CGFloat endAngle = (2.0f * (M_PI - self.angleOffset)) + startAngle;
+    CGFloat startAngle = -(CGFloat)M_PI_2 + self.angleOffset;
+    CGFloat endAngle = (2 * ((CGFloat)M_PI - self.angleOffset)) + startAngle;
 
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center
                                                          radius:radius
@@ -207,48 +222,6 @@ NS_ASSUME_NONNULL_BEGIN
                                                       clockwise:YES];
 
     return path.CGPath;
-}
-
-- (CGFloat)_clampCGFloatValue:(CGFloat)value minimum:(CGFloat)minimum maximum:(CGFloat)maximum
-{
-    // `CGFloat` is defined as `float` on 32-bit systems and as `double` on 64-bit systems.
-    // For this reason, when comparing CGFloats we have to choose the correct C standard library
-    // functions and constants depending on which type we're dealing with. E.g. `fminf` and
-    // `FLT_EPSILON` for floats or `fmin` and `DBL_EPSILON` for doubles.
-#ifdef CGFLOAT_IS_DOUBLE
-    return [self _clampDoubleValue:value minimum:minimum maximum:maximum];
-#else
-    return [self _clampFloatValue:value minimum:minimum maximum:maximum];
-#endif
-}
-
-- (float)_clampFloatValue:(float)value minimum:(float)minimum maximum:(float)maximum
-{
-    return fmaxf(minimum, fminf(value, maximum));
-}
-
-- (double)_clampDoubleValue:(double)value minimum:(double)minimum maximum:(double)maximum
-{
-    return fmax(minimum, fmin(value, maximum));
-}
-
-- (BOOL)_isCGFloatValue:(CGFloat)value equalTo:(CGFloat)other
-{
-#ifdef CGFLOAT_IS_DOUBLE
-    return [self _isDoubleValue:value equalTo:other];
-#else
-    return [self _isFloatValue:value equalTo:other];
-#endif
-}
-
-- (BOOL)_isFloatValue:(float)value equalTo:(float)other
-{
-    return (fabsf(value - other) <= FLT_EPSILON);
-}
-
-- (BOOL)_isDoubleValue:(double)value equalTo:(double)other
-{
-    return (fabs(value - other) <= DBL_EPSILON);
 }
 
 @end

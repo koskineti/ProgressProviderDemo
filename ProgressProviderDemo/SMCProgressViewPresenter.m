@@ -15,12 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SMCProgressViewPresenter () <SMCProgressObserver>
 
-@property (nonatomic, readonly, getter=isPresentable) BOOL presentable;
 @property (nonatomic, readwrite, getter=isPresented) BOOL presented;
 
 @property (nonatomic) SMCProgressProvider *progressProvider;
 @property (nonatomic, weak) UIViewController *parentViewController;
-@property (nonatomic, weak) UIViewController *progressViewController;
+@property (nonatomic, weak) SMCProgressViewController *progressViewController;
 
 @end
 
@@ -102,6 +101,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
     if (self.isPresentable && !self.presented)
     {
+        self.presented = YES;
+
         if (animated)
         {
             [UIView animateWithDuration:0.25f delay:0.1f options:0 animations:^{
@@ -117,8 +118,6 @@ NS_ASSUME_NONNULL_BEGIN
             self.progressViewController.view.alpha = 1.0f;
             [self.parentViewController setNeedsStatusBarAppearanceUpdate];
         }
-
-        self.presented = YES;
     }
 }
 
@@ -126,6 +125,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
     if (self.isPresentable && self.presented)
     {
+        self.presented = NO;
+
         if (animated)
         {
             [UIView animateWithDuration:0.25f delay:1.0f options:0 animations:^{
@@ -135,21 +136,34 @@ NS_ASSUME_NONNULL_BEGIN
             [UIView animateWithDuration:0.25f delay:1.1f options:UIViewAnimationOptionCurveEaseOut animations:^{
                 [self.parentViewController setNeedsStatusBarAppearanceUpdate];
             } completion:NULL];
-
         }
         else
         {
             self.progressViewController.view.alpha = 0.0f;
             [self.parentViewController setNeedsStatusBarAppearanceUpdate];
         }
+    }
+}
 
-        self.presented = NO;
+- (void)presentIfNeededAnimated:(BOOL)animated
+{
+    if (self.progressProvider.isActive)
+    {
+        [self presentAnimated:animated];
+    }
+}
+
+- (void)dismissIfNeededAnimated:(BOOL)animated
+{
+    if (!self.progressProvider.isActive)
+    {
+        [self dismissAnimated:animated];
     }
 }
 
 - (BOOL)prefersStatusBarHidden
 {
-    return self.progressProvider.isActive;
+    return self.isPresented;
 }
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation

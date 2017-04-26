@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, getter=isActive) BOOL active;
 @property (nonatomic, readonly) float progress;
+@property (nonatomic, readonly) CFTimeInterval lastUpdateTime;
 
 + (BOOL)isProgress:(float)progress1 equalToProgress:(float)progress2;
 

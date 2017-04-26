@@ -137,6 +137,10 @@
         <scene sceneID="gBu-UB-Chx">
             <objects>
                 <viewController id="tmF-sy-h0L" customClass="SMCCircularProgressViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PNV-dl-dhf"/>
+                        <viewControllerLayoutGuide type="bottom" id="7lk-ET-6Ro"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hJT-0C-bpZ">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="392.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

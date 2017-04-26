@@ -8,6 +8,8 @@
 
 #import "SMCProgressProvider.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "SMCProgressObserver.h"
 #import "SMCProgressSource.h"
 #import "SMCProgressSourceObserver.h"
@@ -27,9 +29,11 @@ typedef NS_ENUM(NSUInteger, SMCProgressNotificationMethod)
 @interface SMCProgressProvider () <SMCProgressSourceObserver>
 
 @property (nonatomic, readonly) SMCZeroingWeakReferenceArray *observers;
-@property (nonatomic, readonly) SMCZeroingWeakReferenceArray *sources;
+@property (nonatomic, readonly) NSMutableArray<id<SMCProgressSource>> *sources;
 
 @property (nonatomic, readonly) NSUInteger activeSourceCount;
+
+@property (nonatomic, readwrite) CFTimeInterval lastUpdateTime;
 
 @end
 
@@ -45,14 +49,13 @@ typedef NS_ENUM(NSUInteger, SMCProgressNotificationMethod)
 - (float)progress
 {
     float progress = 0.0f;
-    NSArray<id<SMCProgressSource>> *sources = self.sources.objects;
 
-    if (sources.count > 0)
+    if (self.sources.count > 0)
     {
         NSUInteger activeSources = 0;
         float activeSourceProgress = 0.0f;
 
-        for (id<SMCProgressSource> source in sources)
+        for (id<SMCProgressSource> source in self.sources)
         {
             if (source.isActive)
             {
@@ -78,9 +81,8 @@ typedef NS_ENUM(NSUInteger, SMCProgressNotificationMethod)
 - (NSUInteger)activeSourceCount
 {
     NSUInteger activeSourceCount = 0;
-    NSArray<id<SMCProgressSource>> *sources = self.sources.objects;
 
-    for (id<SMCProgressSource> source in sources)
+    for (id<SMCProgressSource> source in self.sources)
     {
         if (source.isActive)
         {
@@ -100,7 +102,7 @@ typedef NS_ENUM(NSUInteger, SMCProgressNotificationMethod)
     if (self != nil)
     {
         _observers = [SMCZeroingWeakReferenceArray new];
-        _sources = [SMCZeroingWeakReferenceArray new];
+        _sources = [NSMutableArray new];
     }
 
     return self;
@@ -199,38 +201,40 @@ typedef NS_ENUM(NSUInteger, SMCProgressNotificationMethod)
 
 #pragma mark - Private
 
-+ (BOOL)_isValidProgress:(float)progress
-{
-    BOOL isEqualToOrGreaterThanZero = fabs(0.0f - progress) <= FLT_EPSILON;
-    BOOL isEqualToOrLessThanOne = fabs(1.0f - progress) <= FLT_EPSILON;
-
-    return isEqualToOrGreaterThanZero && isEqualToOrLessThanOne;
-}
-
 + (float)_clampProgress:(float)progress
 {
-    return fmax(0.0f, fmin(progress, 1.0f));
+    return fmaxf(0.0f, fminf(progress, 1.0f));
 }
 
-- (BOOL)_addObject:(id)object toArray:(SMCZeroingWeakReferenceArray *)array
+- (BOOL)_addObject:(id)object toArray:(id)array
 {
-    BOOL shouldAddObject = ![array containsObject:object];
+    BOOL shouldAddObject = NO;
 
-    if (shouldAddObject)
+    if ([array respondsToSelector:@selector(containsObject:)] && [array respondsToSelector:@selector(addObject:)])
     {
-        [array addObject:object];
+        shouldAddObject = ![array containsObject:object];
+
+        if (shouldAddObject)
+        {
+            [array addObject:object];
+        }
     }
 
     return shouldAddObject;
 }
 
-- (BOOL)_removeObject:(id)object fromArray:(SMCZeroingWeakReferenceArray *)array
+- (BOOL)_removeObject:(id)object fromArray:(id)array
 {
-    BOOL shouldRemoveObject = [array containsObject:object];
+    BOOL shouldRemoveObject = NO;
 
-    if (shouldRemoveObject)
+    if ([array respondsToSelector:@selector(containsObject:)] && [array respondsToSelector:@selector(removeObject:)])
     {
-        [array removeObject:object];
+        shouldRemoveObject = [array containsObject:object];
+
+        if (shouldRemoveObject)
+        {
+            [array removeObject:object];
+        }
     }
 
     return shouldRemoveObject;
@@ -238,6 +242,12 @@ typedef NS_ENUM(NSUInteger, SMCProgressNotificationMethod)
 
 - (void)_notifyObserversWithMethod:(SMCProgressNotificationMethod)method source:(id<SMCProgressSource>)source
 {
+    // We're firing off a notification for a progress update, store the current media time.
+    // Observers that are removed and re-added while this progress provider is running
+    // can use the last update time to resume their animations from the correct position
+    // instead of always animating from 0 to the provider's current progress values.
+    self.lastUpdateTime = CACurrentMediaTime();
+
     NSArray *observers = self.observers.objects;
 
     for (id observer in observers)

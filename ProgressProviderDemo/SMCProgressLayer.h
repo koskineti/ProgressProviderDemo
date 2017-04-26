@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithProgressDisplay:(id<SMCProgressDisplay>)progressDisplay;
 
+- (void)setProgress:(float)progress lastUpdateTime:(CFTimeInterval)lastUpdateTime;
 - (void)setProgress:(float)progress animated:(BOOL)animated;
 - (void)finishWithProgress:(float)progress;
 - (void)finish;

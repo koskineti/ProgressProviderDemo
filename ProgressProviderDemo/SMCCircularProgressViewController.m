@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet SMCCircularProgressView *progressView;
 
 @property (nonatomic, readwrite, getter=isPresented) BOOL presented;
+@property (nonatomic, readonly, getter=isProgressProviderActive) BOOL progressProviderActive;
 @property (nonatomic, weak) SMCProgressProvider *progressProvider;
 @property (nonatomic, nullable) SMCProgressLayer *progressLayer;
 
@@ -38,6 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
     self.progressLayer.progress = progress;
 }
 
+- (BOOL)isProgressProviderActive
+{
+    return ((self.progressProvider != nil) && self.progressProvider.isActive);
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad
@@ -51,6 +57,13 @@ NS_ASSUME_NONNULL_BEGIN
     [self _presentIfNeeded];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self _setInitialProgress];
+}
+
 #pragma mark - SMCProgressObserver
 
 - (void)progressProvider:(SMCProgressProvider *)progressProvider didUpdateProgress:(float)progress
@@ -61,6 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)progressProviderDidBecomeActive:(SMCProgressProvider *)provider
 {
     [self.progressLayer setProgress:0.0f animated:NO];
+    [self.progressLayer setProgress:provider.progress animated:YES];
     [self _presentAnimated:YES];
 }
 
@@ -96,14 +110,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_presentIfNeeded
 {
-    BOOL progressProviderIsActive = ((self.progressProvider != nil) && self.progressProvider.isActive);
-
-    if (progressProviderIsActive)
+    if (self.isProgressProviderActive)
     {
-        float progress = self.progressProvider.progress;
-
-        [self.progressLayer setProgress:progress animated:NO];
-
         self.view.alpha = 1.0f;
         self.presented = YES;
     }
@@ -111,6 +119,17 @@ NS_ASSUME_NONNULL_BEGIN
     {
         self.view.alpha = 0.0f;
         self.presented = NO;
+    }
+}
+
+- (void)_setInitialProgress
+{
+    if (self.isProgressProviderActive)
+    {
+        float progress = self.progressProvider.progress;
+        CFTimeInterval lastUpdateTime = self.progressProvider.lastUpdateTime;
+
+        [self.progressLayer setProgress:progress lastUpdateTime:lastUpdateTime];
     }
 }
 

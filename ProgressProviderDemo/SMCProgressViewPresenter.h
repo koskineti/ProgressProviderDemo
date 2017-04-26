@@ -14,14 +14,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SMCProgressViewPresenter : NSObject
 
+@property (nonatomic, readonly, getter=isPresentable) BOOL presentable;
 @property (nonatomic, readonly, getter=isPresented) BOOL presented;
 
 - (instancetype)initWithProgressProvider:(SMCProgressProvider *)progressProvider NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 
 - (void)addProgressViewControllerToParentViewController:(UIViewController *)parentViewController;
+
 - (void)presentAnimated:(BOOL)animated;
 - (void)dismissAnimated:(BOOL)animated;
+
+- (void)presentIfNeededAnimated:(BOOL)animated;
+- (void)dismissIfNeededAnimated:(BOOL)animated;
 
 - (BOOL)prefersStatusBarHidden;
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation;

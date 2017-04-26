@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) float progress;
 
+- (void)setProgress:(float)progress animated:(BOOL)animated;
+
 @end
 
 NS_ASSUME_NONNULL_END
